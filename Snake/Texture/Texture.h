@@ -2,6 +2,7 @@
 #include <SDL_image.h>
 #include <iostream>
 #include <glm/vec4.hpp>
+#include <glm/vec2.hpp>
 
 class Game;
 
@@ -18,14 +19,23 @@ protected:
 	* Everytime SetLocation is called coords get converted to sceen coords and multiplied by window size
 	*/
 	SDL_Rect resultRect;
+
+	/*Reference to the game for reading data*/
+	Game* game = nullptr;
+
+	bool usingAtlas = false;
 public:
-	Texture(glm::vec4 frame = { 0,0,0,0 });
+	Texture(Game* game, glm::vec4 frame = { 0,0,0,0 });
 
 	//this loads new texture and assignes it 
 	static Texture* LoadFromFile(Game*game,std::string name,glm::vec4 frame);
 
 	//this sets texture to the global atlast texture
-	static Texture* LoadFromAtlas(Game* game, glm::vec4 frame);
+	static Texture* LoadFromAtlas(Game* game, glm::vec4 frame, glm::vec2 size = { 16,16 });
+
+	void SetLocation(glm::vec2 loc);
+
+	void Draw();
 
 	/**
 	* Updates resultRect coords to be proper ones

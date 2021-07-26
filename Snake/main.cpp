@@ -1,11 +1,24 @@
 
 #include <SDL.h>
+#include <Game.h>
 
 int main(int argc, char* args[])
 {
-	SDL_Window* window = SDL_CreateWindow("Tetris", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 100, 100, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
-	SDL_Delay(1000);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
+
+	try
+	{
+		Game* game = new Game();
+		game->Init();
+		while (!game->needsToClose)
+		{
+			game->Update();
+			game->Draw();
+		}
+		game->Close();
+	}
+	catch (std::exception e)
+	{
+		return -1;
+	}
 	return 0;
 }

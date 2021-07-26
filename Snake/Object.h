@@ -26,7 +26,7 @@ protected:
 
 	std::string name = "";
 public:
-	Object(Vector2 loc = { 0,0 });
+	Object(std::string name = "",Vector2 loc = { 0,0 });
 
 	Vector2 GetLocation()const { return location; }
 

@@ -1,8 +1,9 @@
 #include "Object.h"
 
-Object::Object(Vector2 loc)
-	:location(loc)
+Object::Object(std::string _name,Vector2 loc)
+	:location(loc),name(_name)
 {
+
 }
 
 void Object::SetLocation(Vector2 loc)
