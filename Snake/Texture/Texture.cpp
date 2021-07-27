@@ -72,5 +72,6 @@ void Texture::OnWindowResize()
 
 Texture::~Texture()
 {
-	SDL_DestroyTexture(texture);
+	//textures use atlases in snake so removing them would cause crash
+	//SDL_DestroyTexture(texture);
 }

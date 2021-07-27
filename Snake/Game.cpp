@@ -125,6 +125,22 @@ void Game::Update()
 		}
 	}
 	lastTime = SDL_GetPerformanceCounter();
+	for (int i = objects.size() - 1; i >= 0; i--)
+	{
+		if (!objects[i]->Valid())
+		{
+			RenderLayersObjects[objects[i]->GetRenderLayerId()].erase
+			(
+				std::find(RenderLayersObjects[objects[i]->GetRenderLayerId()].begin(),
+				RenderLayersObjects[objects[i]->GetRenderLayerId()].end(),
+				objects[i])
+			);
+
+			objects[i]->Destroy();
+			objects[i] = nullptr;
+			objects.erase(objects.begin() + i);
+		}
+	}
 }
 
 AtlasTexture::AtlasTexture(std::string _name, SDL_Texture* _texture)

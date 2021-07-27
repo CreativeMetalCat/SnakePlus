@@ -1,7 +1,7 @@
 #include "WorldObjects.h"
 
-WorldObject::WorldObject(Game* game, std::string name, Vector2 loc)
-	:Object(game,name,loc)
+WorldObject::WorldObject(Game* game, int _renderLayerId, std::string name, Vector2 loc)
+	:Object(game,name,loc),renderLayerId(_renderLayerId)
 {
 }
 

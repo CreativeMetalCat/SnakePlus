@@ -109,7 +109,7 @@ public:
 template<class Class, class ...Args>
 inline Class* Game::SpawnWorldObject(std::string name,int renderLayerId, Args ...args)
 {
-	Class* obj = new Class(this, name, args...);
+	Class* obj = new Class(this,renderLayerId, name, args...);
 	objects.push_back(obj);
 	RenderLayersObjects[renderLayerId].push_back(obj);
 	return obj;

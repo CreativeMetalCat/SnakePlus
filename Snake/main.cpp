@@ -5,16 +5,17 @@
 int main(int argc, char* args[])
 {
 
+	Game* game = new Game();
+	game->Init();
+	while (!game->needsToClose)
+	{
+		game->Update();
+		game->Draw();
+	}
+	game->Close();
 	try
 	{
-		Game* game = new Game();
-		game->Init();
-		while (!game->needsToClose)
-		{
-			game->Update();
-			game->Draw();
-		}
-		game->Close();
+		
 	}
 	catch (std::exception e)
 	{

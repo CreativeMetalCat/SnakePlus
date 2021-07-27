@@ -20,8 +20,12 @@ class WorldObject :public Object
 {
 protected:
 	Texture* objectTexture = nullptr;
+
+	int renderLayerId = 0;
 public:
-	WorldObject(Game* game, std::string name = "", Vector2 loc = { 0,0 });
+	WorldObject(Game* game, int renderLayerId, std::string name = "", Vector2 loc = { 0,0 });
+
+	int GetRenderLayerId()const { return renderLayerId; }
 
 	virtual void SetLocation(glm::vec2 loc)override;
 

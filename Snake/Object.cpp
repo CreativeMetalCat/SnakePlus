@@ -11,6 +11,11 @@ void Object::SetLocation(Vector2 loc)
 	location = loc;
 }
 
+void Object::Invalidate()
+{
+	pending_kill = true;
+}
+
 void Object::Destroy()
 {
 }

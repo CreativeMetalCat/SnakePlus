@@ -1,11 +1,22 @@
 #include "Player.h"
 #include <Game.h>
+#include <string>
 
-void Player::MoveHorizontal(bool right)
+void Player::move(glm::vec2 resLoc)
 {
 	if (SnakeHead && game)
 	{
-		glm::vec2 resLoc = SnakeHead->GetLocation() + glm::vec2(game->GridSize * (right ? 1 : -1), 0);
+		//backtracking
+		if (!SnakeParts.empty() && SnakeParts[SnakeParts.size() - 1]->GetLocation() == resLoc)
+		{
+			SnakeParts[SnakeParts.size() - 1]->Invalidate();
+			SnakeParts.pop_back();
+		}
+		else
+		{
+			AddSnakePart();
+		}
+
 		if (CanMove(resLoc))
 		{
 			//check if can move to that location
@@ -14,17 +25,21 @@ void Player::MoveHorizontal(bool right)
 	}
 }
 
+void Player::MoveHorizontal(bool right)
+{
+	glm::vec2 resLoc = SnakeHead->GetLocation() + glm::vec2(game->GridSize * (right ? 1 : -1), 0);
+	move(resLoc);
+}
+
 void Player::MoveVertical(bool down)
 {
-	if (SnakeHead && game)
-	{
-		glm::vec2 resLoc = SnakeHead->GetLocation() + glm::vec2(0, game->GridSize * (down ? 1 : -1));
-		if (CanMove(resLoc))
-		{
-			//check if can move to that location
-			SnakeHead->SetLocation(resLoc);
-		}
-	}
+	glm::vec2 resLoc = SnakeHead->GetLocation() + glm::vec2(0, game->GridSize * (down ? 1 : -1));
+	move(resLoc);
+}
+
+void Player::AddSnakePart()
+{
+	SnakeParts.push_back(game->SpawnWorldObject<Snake>("snakePart" + std::to_string(SnakeParts.size()), 0, Snake::Body, SnakeHead->GetLocation()));
 }
 
 bool Player::CanMove(glm::vec2 loc)

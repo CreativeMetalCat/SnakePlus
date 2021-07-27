@@ -40,6 +40,8 @@ public:
 
 	virtual void Update(float dt) {}
 
+	virtual void Invalidate();
+
 	virtual void Destroy();
 };
 

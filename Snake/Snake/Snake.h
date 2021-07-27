@@ -12,7 +12,7 @@ public:
 		Body = 48,
 	};
 
-	Snake(Game*game, std::string name = "snake", Type type = Type::Head, glm::vec2 location = { 0,0 });
+	Snake(Game*game, int renderLayerId, std::string name = "snake", Type type = Type::Head, glm::vec2 location = { 0,0 });
 
 
 	void UpdateRotation(int value);

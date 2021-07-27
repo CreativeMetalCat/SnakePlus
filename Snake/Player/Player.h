@@ -25,15 +25,23 @@ protected:
 
 	Game* game = nullptr;
 
-	void MoveHorizontal(bool right);
+	void move(glm::vec2 newLoc);
 
-	void MoveVertical(bool down);
+	/**
+	* This function spawns new spawn block at head's location
+	* To avoid weird bugs spawn part first then move head
+	*/
+	void AddSnakePart();
 
 	bool CanMove(glm::vec2 loc);
 
 	PlayerRotation rotation = PlayerRotation::Right;
 public:
+	//The part moved by player
 	Snake* SnakeHead = nullptr;
+
+	//the only part that can not be removed
+	Snake* SnakeTail = nullptr;
 
 	/**
 	* Reference to each piece of the snake(used for updates)
@@ -41,6 +49,10 @@ public:
 	std::vector<Snake*>SnakeParts = std::vector<Snake*>();
 
 	Player(Game* game);
+
+	void MoveHorizontal(bool right);
+
+	void MoveVertical(bool down);
 
 	/*
 	* This methode goes over every input and reacts accourdingly
