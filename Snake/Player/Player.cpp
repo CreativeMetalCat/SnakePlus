@@ -6,19 +6,20 @@ void Player::move(glm::vec2 resLoc)
 {
 	if (SnakeHead && game)
 	{
-		//backtracking
-		if (!SnakeParts.empty() && SnakeParts[SnakeParts.size() - 1]->GetLocation() == resLoc)
-		{
-			SnakeParts[SnakeParts.size() - 1]->Invalidate();
-			SnakeParts.pop_back();
-		}
-		else
-		{
-			AddSnakePart();
-		}
-
 		if (CanMove(resLoc))
 		{
+			//backtracking
+			if (!SnakeParts.empty() && SnakeParts[SnakeParts.size() - 1]->GetLocation() == resLoc)
+			{
+				SnakeParts[SnakeParts.size() - 1]->Invalidate();
+				SnakeParts.pop_back();
+			}
+			else
+			{
+				AddSnakePart();
+			}
+
+
 			//check if can move to that location
 			SnakeHead->SetLocation(resLoc);
 		}
@@ -44,6 +45,16 @@ void Player::AddSnakePart()
 
 bool Player::CanMove(glm::vec2 loc)
 {
+	if (!SnakeParts.empty())
+	{
+		for (int i = 0; i < SnakeParts.size() - 1; i++)
+		{
+			if (SnakeParts[i]->GetLocation() == loc)
+			{
+				return false;
+			}
+		}
+	}
 	return true;
 }
 
