@@ -41,6 +41,14 @@ void Player::MoveVertical(bool down)
 void Player::AddSnakePart()
 {
 	SnakeParts.push_back(game->SpawnWorldObject<Snake>("snakePart" + std::to_string(SnakeParts.size()), 0, Snake::Body, SnakeHead->GetLocation()));
+	SnakeParts[SnakeParts.size() - 1]->BodyRotation = rotation;
+	SnakeParts[SnakeParts.size() - 1]->UpdateRotation((int)rotation);
+	if (SnakeParts.size() > 2)
+	{
+		SnakeParts[SnakeParts.size() - 1]->UpdateFrame(SnakeParts[SnakeParts.size() - 2]);
+	}
+	
+	//SnakeParts[SnakeParts.size() - 2]->UpdateFrame(SnakeParts[SnakeParts.size() - 3]);
 }
 
 bool Player::CanMove(glm::vec2 loc)
@@ -70,6 +78,28 @@ void Player::UpdateInput(InputEvent* e)
 	{
 		if (e->Type == InputType::KeyDown && !inputHeld)
 		{
+			heldKey = e->Code;
+			switch (e->Code)
+			{
+			case SDLK_LEFT:
+				rotation = Snake::Rotation::Left;
+				break;
+			case SDLK_RIGHT:
+				rotation = Snake::Rotation::Right;
+				break;
+			case SDLK_UP:
+				rotation = Snake::Rotation::Up;
+				break;
+			case SDLK_DOWN:
+				rotation = Snake::Rotation::Down;
+				break;
+			default:
+				rotation = Snake::Rotation::Right;
+				break;
+			}
+
+			SnakeHead->UpdateRotation((int)rotation);
+
 			if (e->Code == SDLK_LEFT || e->Code == SDLK_RIGHT)
 			{
 				//right and left are separated by 1 so if it's 0 it's left, right otherwise
@@ -81,30 +111,6 @@ void Player::UpdateInput(InputEvent* e)
 			{
 				MoveVertical(e->Code - SDLK_UP);
 				inputHeld = true;
-			}
-
-			if (inputHeld)
-			{
-				heldKey = e->Code;
-				switch (e->Code)
-				{
-				case SDLK_LEFT:
-					rotation = PlayerRotation::Left;
-					break;
-				case SDLK_RIGHT:
-					rotation = PlayerRotation::Right;
-					break;
-				case SDLK_UP:
-					rotation = PlayerRotation::Up;
-					break;
-				case SDLK_DOWN:
-					rotation = PlayerRotation::Down;
-					break;
-				default:
-					rotation = PlayerRotation::Right;
-					break;
-				}
-				SnakeHead->UpdateRotation((int)rotation);
 			}
 		}
 		else if (e->Type == InputType::KeyUp)

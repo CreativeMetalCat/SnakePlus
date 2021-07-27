@@ -5,14 +5,6 @@
 
 #include <vector>
 
-enum PlayerRotation
-{
-	Up = 0,
-	Down = 1,
-	Right = 2,
-	Left = 3
-};
-
 /**
 * This class handles overall contolling of the snake  
 */
@@ -35,7 +27,7 @@ protected:
 
 	bool CanMove(glm::vec2 loc);
 
-	PlayerRotation rotation = PlayerRotation::Right;
+	Snake::Rotation rotation = Snake::Rotation::Right;
 public:
 	//The part moved by player
 	Snake* SnakeHead = nullptr;
