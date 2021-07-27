@@ -39,6 +39,11 @@ void Texture::SetLocation(glm::vec2 loc)
 	}
 }
 
+void Texture::UpdateFrameRect(glm::vec4 newRect)
+{
+	frameRect = { (int)newRect.x,(int)newRect.y,(int)newRect.z ,(int)newRect.w };
+}
+
 void Texture::Draw()
 {
 	if(game && game->GetRenderer())

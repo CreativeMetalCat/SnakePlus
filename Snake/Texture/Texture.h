@@ -35,6 +35,11 @@ public:
 
 	void SetLocation(glm::vec2 loc);
 
+	/**
+	* This function updates source reactangle used to display only a part of image
+	*/
+	void UpdateFrameRect(glm::vec4 newRect);
+
 	void Draw();
 
 	/**

@@ -1,7 +1,7 @@
 #include "Object.h"
 
-Object::Object(std::string _name,Vector2 loc)
-	:location(loc),name(_name)
+Object::Object(Game* _game, std::string _name, Vector2 loc)
+	:location(loc), name(_name), game(game)
 {
 
 }

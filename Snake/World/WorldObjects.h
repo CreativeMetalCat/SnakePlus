@@ -11,7 +11,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 
 #pragma once
 #include "Object.h"
-
+#include <Texture/Texture.h>
 
 /**
 * This class contains basic objects for displaying objects that will be used in gameplay
@@ -19,6 +19,14 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 class WorldObject :public Object
 {
 protected:
+	Texture* objectTexture = nullptr;
+public:
+	WorldObject(Game* game, std::string name = "", Vector2 loc = { 0,0 });
 
+	virtual void SetLocation(glm::vec2 loc)override;
+
+	virtual void Draw();
+
+	virtual void Destroy()override;
 };
 

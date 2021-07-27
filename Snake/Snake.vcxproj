@@ -147,15 +147,21 @@
   <ItemGroup>
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Player\InputEvent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Player\Player.cpp" />
+    <ClCompile Include="Snake\Snake.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="World\WorldObjects.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Player\InputEvent.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Player\Player.h" />
+    <ClInclude Include="Snake\Snake.h" />
     <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="World\WorldObjects.h" />
   </ItemGroup>

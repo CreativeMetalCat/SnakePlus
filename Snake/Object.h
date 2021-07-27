@@ -14,6 +14,8 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 
 typedef glm::vec2 Vector2;
 
+class Game;
+
 /**
 * This base class contains basic function nessesary for displaying object on screen
 */
@@ -25,8 +27,10 @@ protected:
 	bool pending_kill = false;
 
 	std::string name = "";
+
+	Game* game;
 public:
-	Object(std::string name = "",Vector2 loc = { 0,0 });
+	Object(Game* game,std::string name = "",Vector2 loc = { 0,0 });
 
 	Vector2 GetLocation()const { return location; }
 

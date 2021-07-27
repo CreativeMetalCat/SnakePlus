@@ -4,7 +4,6 @@
 
 Game::Game()
 {
-
 	if (SDL_Init(SDL_INIT_VIDEO) >= 0)
 	{
 		if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
@@ -32,7 +31,6 @@ Game::Game()
 				SDL_SetRenderDrawColor(renderer, defaultClearColor.r, defaultClearColor.b, defaultClearColor.g, 255);
 			}
 		}
-
 	}
 	else
 	{
@@ -60,6 +58,9 @@ void Game::Init()
 	textures.push_back(AtlasTexture("atlas", LoadTextureFromFile("atlas.png")));
 	test = Texture::LoadFromAtlas(this, { 0,64,16,16 });
 	test->SetLocation(glm::vec2(50, 123));
+
+	player = new Player(this);
+	player->SnakeHead = SpawnWorldObject<Snake>("snek", 0);
 }
 
 void Game::Close()
@@ -85,7 +86,13 @@ void Game::Close()
 void Game::Draw()
 {
 	SDL_RenderClear(renderer);
-	test->Draw();
+	for (int i = 0; i < 3; i++)
+	{
+		for (int id = 0; id < RenderLayersObjects[i].size(); id++)
+		{
+			RenderLayersObjects[i][id]->Draw();
+		}
+	}
 	SDL_RenderPresent(renderer);
 }
 
@@ -96,6 +103,10 @@ void Game::Update()
 	{
 		while (SDL_PollEvent(&event) != 0)
 		{
+			InputEvent* inputEvent = new InputEvent();
+			inputEvent->Type = (InputType)event.type;
+			inputEvent->Code = event.key.keysym.sym;
+
 			if (event.type == SDL_QUIT)
 			{
 				needsToClose = true;
@@ -110,6 +121,7 @@ void Game::Update()
 					test->OnWindowResize();
 				}
 			}
+			player->UpdateInput(inputEvent);
 		}
 	}
 	lastTime = SDL_GetPerformanceCounter();

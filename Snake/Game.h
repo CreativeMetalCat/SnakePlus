@@ -19,6 +19,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 #include <glm/vec3.hpp>
 
 #include <Texture/Texture.h>
+#include <Player/Player.h>
 
 struct AtlasTexture
 {
@@ -34,6 +35,13 @@ protected:
 	SDL_Renderer* renderer = nullptr;
 
 	std::vector<WorldObject*>objects = std::vector<WorldObject*>();
+
+	/**to make drawing easier objects can use differnt layers to be drawn
+	* 0 is background
+	* 1 is gameplay
+	* 2 is for snake
+	*/
+	std::vector<WorldObject*>RenderLayersObjects[3];
 
 	SDL_Window* window = nullptr;
 
@@ -59,6 +67,8 @@ public:
 	* */
 	std::vector<AtlasTexture>textures = std::vector< AtlasTexture>();
 
+	Player* player = nullptr;
+
 	Game();
 
 	SDL_Texture* GetTexture(std::string name);
@@ -75,8 +85,10 @@ public:
 
 	float GetDeltaTime()const { return deltaTime; }
 
+	int GridSize = 64;
+
 	template<class Class,class ...Args>
-	Class* SpawnWorldObject(std::string name, Args...args);
+	Class* SpawnWorldObject(std::string name, int renderLayerId, Args...args);
 
 	SDL_Event event;
 
@@ -95,9 +107,10 @@ public:
 };
 
 template<class Class, class ...Args>
-inline Class* Game::SpawnWorldObject(std::string name, Args ...args)
+inline Class* Game::SpawnWorldObject(std::string name,int renderLayerId, Args ...args)
 {
-	Class* obj = new Class(name, args...);
+	Class* obj = new Class(this, name, args...);
 	objects.push_back(obj);
+	RenderLayersObjects[renderLayerId].push_back(obj);
 	return obj;
 }
