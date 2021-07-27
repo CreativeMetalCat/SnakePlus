@@ -29,6 +29,8 @@ public:
 
 	virtual void SetLocation(glm::vec2 loc)override;
 
+	Texture* GetTexture()const { return objectTexture; }
+
 	virtual void Draw();
 
 	virtual void Destroy()override;

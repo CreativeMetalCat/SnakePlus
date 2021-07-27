@@ -13,6 +13,8 @@ protected:
 
 	SDL_Rect frameRect;
 
+	glm::vec4 resRect;
+
 	/**
 	* Result rectangle that will be used for passign data to SDL
 	* coords are defined in 0.0-1.0 space and multiplied by the size of the window

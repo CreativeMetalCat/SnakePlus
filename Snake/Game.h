@@ -45,6 +45,7 @@ protected:
 
 	SDL_Window* window = nullptr;
 
+
 	/**
 	* this value is equal to the size of the window before resizing
 	* */
@@ -54,6 +55,11 @@ protected:
 	* curent size of the window
 	* */
 	glm::vec2 window_size = { 500,500 };
+
+	/**
+	* Window size that this game starts with
+	*/
+	glm::vec2 default_window_size = { 500,500 };
 
 	glm::vec3 defaultClearColor = { 0,0,0 };
 
@@ -80,6 +86,8 @@ public:
 	glm::vec2 GetOldWindowSize()const { return window_size_old; }
 
 	glm::vec2 GetWindowSize()const { return window_size; }
+
+	glm::vec2 GetWindowScale()const { return window_size / default_window_size; }
 
 	Camera* CurrentCamera = nullptr;
 

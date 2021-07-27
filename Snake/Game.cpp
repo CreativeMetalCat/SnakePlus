@@ -60,7 +60,8 @@ void Game::Init()
 	test->SetLocation(glm::vec2(50, 123));
 
 	player = new Player(this);
-	player->SnakeHead = SpawnWorldObject<Snake>("snek", 0);
+	player->SnakeHead = SpawnWorldObject<Snake>("snek", 0, Snake::Type::Head, glm::vec2(GridSize, 0));
+	player->SnakeHead = SpawnWorldObject<Snake>("snekEnd", 0, Snake::Type::Tail, glm::vec2(0, 0));
 }
 
 void Game::Close()
@@ -118,6 +119,10 @@ void Game::Update()
 					window_size_old = window_size;
 					window_size = { event.window.data1,event.window.data2 };
 
+					for (int i = 0; i < objects.size(); i++)
+					{
+						objects[i]->GetTexture()->OnWindowResize();
+					}
 					test->OnWindowResize();
 				}
 			}

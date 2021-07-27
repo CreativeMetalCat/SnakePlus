@@ -7,8 +7,8 @@ Snake::Snake(Game* game,int rendLayerId, std::string name, Type type, glm::vec2 
 {
 	glm::vec4 frame = { 0,0,16,16 };
 	//uvs are hardcoded for now
-	objectTexture = Texture::LoadFromAtlas(game, frame, { game->GridSize,game->GridSize });
-	objectTexture->SetLocation(location);
+    objectTexture = Texture::LoadFromAtlas(game, frame, { game->GridSize * game->GetWindowScale().x,game->GridSize * game->GetWindowScale().y });
+	objectTexture->SetLocation(location );
 }
 
 void Snake::UpdateFrame(Snake*prevPart)

@@ -16,7 +16,7 @@ public:
 	enum Type
 	{
 		Head = 0,
-		Tai = 16,
+		Tail = 16,
 		BodyCurved = 32,
 		Body = 48,
 	};

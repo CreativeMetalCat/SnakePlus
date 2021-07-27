@@ -21,6 +21,9 @@ Texture* Texture::LoadFromAtlas(Game* game, glm::vec4 frame, glm::vec2 size)
 		texture->texture = game->GetTexture("atlas");
 		texture->resultRect = { 0,0,(int)size.x,(int)size.y };
 
+		texture->resRect.z = size.x;
+		texture->resRect.w = size.y;
+
 		return texture;
 	}
 	return nullptr;
@@ -31,11 +34,17 @@ void Texture::SetLocation(glm::vec2 loc)
 	if (game->CurrentCamera)
 	{
 		glm::vec2 resLoc = loc - game->CurrentCamera->GetLocation();
+		resRect.x = resLoc.x;
+		resRect.y = resLoc.y;
+
+		resLoc *= game->GetWindowScale();
 		resultRect = { (int)resLoc.x,(int)resLoc.y,resultRect.w ,resultRect.h };
 	}
 	else
 	{
-		resultRect = { (int)loc.x,(int)loc.y,resultRect.w ,resultRect.h };
+		resRect.x = loc.x;
+		resRect.y = loc.y;
+		resultRect = { (int)(loc.x * game->GetWindowScale().x),(int)(loc.y * game->GetWindowScale().y),resultRect.w ,resultRect.h };
 	}
 }
 
@@ -59,14 +68,13 @@ void Texture::OnWindowResize()
 {
 	if (game)
 	{
-		glm::vec2 winSize = game->GetOldWindowSize();
-		glm::vec2 newWindSize = game->GetWindowSize();
-		//first convert locations to window size independent ones
-
-		//texture result rect in 0-1 coords(instead of 0-windowsize coords)
-		glm::vec4 rect = { resultRect.x / winSize.x, resultRect.y / winSize.y,resultRect.w / winSize.x, resultRect.h / winSize.y };
-
-		resultRect = { (int)(rect.x * newWindSize.x),(int)(rect.y * newWindSize.y),(int)(rect.z * newWindSize.x),(int)(rect.w * newWindSize.y) };
+		resultRect =
+		{
+			(int)(resRect.x * game->GetWindowScale().x),
+			(int)(resRect.y * game->GetWindowScale().y),
+			(int)(resRect.z * game->GetWindowScale().x),
+			(int)(resRect.w * game->GetWindowScale().y)
+		};
 	}
 }
 
