@@ -8,6 +8,8 @@
 
 #include <nlohmann/json.hpp>
 
+#include <World/Wall.h>
+
 
 Game::Game()
 {
@@ -92,6 +94,21 @@ bool Game::LoadLevel(std::string levelFilePath)
 					);
 			}
 		}
+
+		for (nlohmann::json::iterator it = items["walls"].begin(); it != items["walls"].end(); it++)
+		{
+			SpawnWorldObject<Wall>
+				(
+					"wall",
+					(int)RenderLayers::Wall,
+					glm::vec2
+					(
+						(*it)["location"]["x"].get<int>(),
+						(*it)["location"]["y"].get<int>()
+					)* (float)GridSize
+				);
+
+		}
 	}
 	else
 	{
@@ -154,7 +171,7 @@ void Game::Close()
 void Game::Draw()
 {
 	SDL_RenderClear(renderer);
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < (int)RenderLayers::MAX; i++)
 	{
 		for (int id = 0; id < RenderLayersObjects[i].size(); id++)
 		{

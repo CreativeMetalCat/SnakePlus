@@ -153,6 +153,7 @@
     <ClCompile Include="Player\Player.cpp" />
     <ClCompile Include="Snake\Snake.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
+    <ClCompile Include="World\Wall.cpp" />
     <ClCompile Include="World\WorldObjects.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +164,7 @@
     <ClInclude Include="Player\Player.h" />
     <ClInclude Include="Snake\Snake.h" />
     <ClInclude Include="Texture\Texture.h" />
+    <ClInclude Include="World\Wall.h" />
     <ClInclude Include="World\WorldObjects.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

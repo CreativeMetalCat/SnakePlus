@@ -72,6 +72,19 @@ bool Player::CanMove(glm::vec2 loc)
 			}
 		}
 	}
+
+	std::vector<WorldObject*> arr = game->GetObjectsInRenderLayer((int)RenderLayers::Wall);
+	if (!arr.empty())
+	{
+		for (auto it = arr.begin(); it != arr.end(); it++)
+		{
+			if ((*it)->GetLocation() == loc)
+			{
+				return false;
+			}
+		}
+	}
+
 	return true;
 }
 

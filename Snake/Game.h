@@ -33,7 +33,9 @@ enum class RenderLayers :int
 {
 	Background = 0,
 	GameplayObjects = 1,
-	Snake = 2
+	Wall = 2,
+	Snake = 3,
+	MAX
 };
 
 class Game
@@ -48,7 +50,7 @@ protected:
 	* 1 is gameplay
 	* 2 is for snake
 	*/
-	std::vector<WorldObject*>RenderLayersObjects[3];
+	std::vector<WorldObject*>RenderLayersObjects[4];
 
 	SDL_Window* window = nullptr;
 
@@ -95,6 +97,8 @@ public:
 	glm::vec2 GetWindowSize()const { return window_size; }
 
 	glm::vec2 GetWindowScale()const { return window_size / default_window_size; }
+
+	std::vector<WorldObject*> GetObjectsInRenderLayer(int id) { return RenderLayersObjects[id]; }
 
 	/**
 	* Load new level.
