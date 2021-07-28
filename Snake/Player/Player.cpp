@@ -47,7 +47,12 @@ void Player::AddSnakePart()
 	{
 		SnakeParts[SnakeParts.size() - 1]->UpdateFrame(SnakeParts[SnakeParts.size() - 2]);
 	}
-	
+	else
+	{
+		SnakeTail->BodyRotation = rotation;
+		SnakeTail->UpdateRotation((int)rotation);
+		SnakeParts[SnakeParts.size() - 1]->UpdateFrame(SnakeTail);
+	}
 	//SnakeParts[SnakeParts.size() - 2]->UpdateFrame(SnakeParts[SnakeParts.size() - 3]);
 }
 

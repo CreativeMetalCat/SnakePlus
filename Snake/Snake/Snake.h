@@ -23,6 +23,8 @@ public:
 
 	Rotation BodyRotation = Rotation::Up;
 
+	Type BodyType = Type::Body;
+
 	Snake(Game*game, int renderLayerId, std::string name = "snake", Type type = Type::Head, glm::vec2 location = { 0,0 });
 
 	/**

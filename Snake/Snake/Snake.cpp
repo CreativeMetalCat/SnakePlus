@@ -3,7 +3,7 @@
 
 
 Snake::Snake(Game* game,int rendLayerId, std::string name, Type type, glm::vec2 location)
-	:WorldObject(game,rendLayerId,name,location)
+	:WorldObject(game,rendLayerId,name,location),BodyType(type)
 {
 	glm::vec4 frame = { 0,0,16,16 };
 	//uvs are hardcoded for now
@@ -59,6 +59,14 @@ void Snake::UpdateFrame(Snake*prevPart)
             uv.y = 32;
         }
     }
+    if (uv.y == 32)
+    {
+        BodyType = Type::BodyCurved;
+    }
+    else if(uv.y == 48)
+    {
+        BodyType = Type::Body;
+    }
     objectTexture->UpdateFrameRect({ uv.x,uv.y,16,16 });
 }
 
@@ -66,6 +74,6 @@ void Snake::UpdateRotation(int value)
 {
 	if (objectTexture)
 	{
-		objectTexture->UpdateFrameRect({ value * 16,0,16,16 });
+        objectTexture->UpdateFrameRect({ value * 16,BodyType == Type::Head ? 0 : 16,16,16 });
 	}
 }

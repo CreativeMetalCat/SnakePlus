@@ -61,7 +61,7 @@ void Game::Init()
 
 	player = new Player(this);
 	player->SnakeHead = SpawnWorldObject<Snake>("snek", 0, Snake::Type::Head, glm::vec2(GridSize, 0));
-	player->SnakeHead = SpawnWorldObject<Snake>("snekEnd", 0, Snake::Type::Tail, glm::vec2(0, 0));
+	player->SnakeTail = SpawnWorldObject<Snake>("snekEnd", 0, Snake::Type::Tail, glm::vec2(0, 0));
 }
 
 void Game::Close()
