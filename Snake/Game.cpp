@@ -79,7 +79,12 @@ bool Game::LoadLevel(std::string levelFilePath)
 		int fieldSize = atoi(items["size"].get<std::string>().c_str());
 
 		player = new Player(this);
-		player->SnakeHead = SpawnWorldObject<Snake>("snek", (int)RenderLayers::Snake, Snake::Type::Head, glm::vec2(GridSize, 0));
+		player->SnakeHead = SpawnWorldObject<Snake>("snek", (int)RenderLayers::Snake, Snake::Type::Head,
+			glm::vec2
+			(
+				items["playerSpawn"]["location"]["x"].get<int>() * GridSize,
+				items["playerSpawn"]["location"]["y"].get<int>() * GridSize
+			));
 		player->SnakeTail = SpawnWorldObject<Snake>("snekEnd", (int)RenderLayers::Snake, Snake::Type::Tail, glm::vec2(0, 0));
 
 		for (int x = 0; x < fieldSize; x++)
@@ -123,6 +128,8 @@ bool Game::LoadLevel(std::string levelFilePath)
 					) * (float)GridSize
 					);
 		}
+
+		;
 	}
 	else
 	{
