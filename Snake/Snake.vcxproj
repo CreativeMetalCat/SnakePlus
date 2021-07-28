@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="UI\Button.cpp" />
     <ClCompile Include="GameplayObjects\EndFlag.cpp" />
     <ClCompile Include="GameplayObjects\Apple.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="World\WorldObjects.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="UI\Button.h" />
     <ClInclude Include="GameplayObjects\EndFlag.h" />
     <ClInclude Include="GameplayObjects\Apple.h" />
     <ClInclude Include="Camera\Camera.h" />

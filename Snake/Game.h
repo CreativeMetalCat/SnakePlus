@@ -35,6 +35,7 @@ enum class RenderLayers :int
 	GameplayObjects = 1,
 	Wall = 2,
 	Snake = 3,
+	UI = 4,
 	MAX
 };
 
@@ -44,6 +45,8 @@ protected:
 	SDL_Renderer* renderer = nullptr;
 
 	std::vector<WorldObject*>objects = std::vector<WorldObject*>();
+
+	std::vector<WorldObject*>ui = std::vector<WorldObject*>();
 
 	/**to make drawing easier objects can use differnt layers to be drawn
 	* 0 is background
@@ -131,6 +134,9 @@ public:
 	template<class Class,class ...Args>
 	Class* SpawnWorldObject(std::string name, int renderLayerId, Args...args);
 
+	template<class Class, class ...Args>
+	Class* SpawnUIObject(std::string name, Args...args);
+
 	SDL_Event event;
 
 	bool needsToClose = false;
@@ -154,4 +160,13 @@ inline Class* Game::SpawnWorldObject(std::string name,int renderLayerId, Args ..
 	objects.push_back(obj);
 	RenderLayersObjects[renderLayerId].push_back(obj);
 	return obj;
+}
+
+template<class Class, class ...Args>
+inline Class* Game::SpawnUIObject(std::string name, Args ...args)
+{
+	Class* uio = new Class(this, (int)RenderLayers::UI, args...);
+	RenderLayersObjects[(int)RenderLayers::UI].push_back(uio);
+	ui.push_back(uio);
+	return uio;
 }

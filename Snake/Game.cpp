@@ -167,8 +167,7 @@ void Game::ClearLevel()
 void Game::Init()
 {
 	textures.push_back(AtlasTexture("atlas", LoadTextureFromFile("atlas.png")));
-	/*test = Texture::LoadFromAtlas(this, { 0,64,16,16 });
-	test->SetLocation(glm::vec2(50, 123));*/
+	textures.push_back(AtlasTexture("ui_atlas", LoadTextureFromFile("atlas_ui.png")));
 
 	CurrentCamera = new Camera(this);
 
@@ -209,7 +208,10 @@ void Game::Draw()
 	{
 		for (int id = 0; id < RenderLayersObjects[i].size(); id++)
 		{
-			RenderLayersObjects[i][id]->Draw();
+			if (RenderLayersObjects[i][id]->Visible)
+			{
+				RenderLayersObjects[i][id]->Draw();
+			}
 		}
 	}
 	SDL_RenderPresent(renderer);

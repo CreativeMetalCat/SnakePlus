@@ -23,6 +23,9 @@ protected:
 
 	int renderLayerId = 0;
 public:
+
+	bool Visible = true;
+
 	WorldObject(Game* game, int renderLayerId, std::string name = "", Vector2 loc = { 0,0 });
 
 	/**
