@@ -30,9 +30,11 @@ protected:
 
 	Game* game;
 public:
-	Object(Game* game,std::string name = "",Vector2 loc = { 0,0 });
+	Object(Game* game, std::string name = "", Vector2 loc = { 0,0 });
 
 	Vector2 GetLocation()const { return location; }
+
+	std::string GetName()const { return name; }
 
 	virtual bool Valid()const { return !pending_kill; }
 

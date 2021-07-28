@@ -2,6 +2,8 @@
 #include <Game.h>
 #include <string>
 
+#include <GameplayObjects/Apple.h>
+
 void Player::move(glm::vec2 resLoc)
 {
 	if (SnakeHead && game)
@@ -16,10 +18,32 @@ void Player::move(glm::vec2 resLoc)
 				SnakeHead->UpdateRotation((int)SnakeHead->BodyRotation);
 				SnakeParts[SnakeParts.size() - 1]->Invalidate();
 				SnakeParts.pop_back();
+
+				//search over every interactible object to find apples
+				std::vector<WorldObject*>arr = game->GetObjectsInRenderLayer((int)RenderLayers::GameplayObjects);
+				for (auto it = arr.begin(); it != arr.end(); it++)
+				{
+					if ((*it)->GetLocation() == resLoc && (*it)->GetName() == "apple")
+					{
+						dynamic_cast<Apple*>(*it)->BeUnCollected();
+						break;
+					}
+				}
 			}
 			else
 			{
 				AddSnakePart();
+
+				//search over every interactible object to find apples
+				std::vector<WorldObject*>arr = game->GetObjectsInRenderLayer((int)RenderLayers::GameplayObjects);
+				for (auto it = arr.begin(); it != arr.end(); it++)
+				{
+					if ((*it)->GetLocation() == resLoc && (*it)->GetName() == "apple")
+					{
+						dynamic_cast<Apple*>(*it)->BeCollected();
+						break;
+					}
+				}
 			}
 
 
@@ -30,6 +54,8 @@ void Player::move(glm::vec2 resLoc)
 				game->CurrentCamera->SetLocation(resLoc);
 			}
 			SnakeHead->UpdateRotation((int)rotation);
+
+			
 		}
 	}
 }

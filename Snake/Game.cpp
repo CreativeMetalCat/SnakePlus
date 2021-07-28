@@ -9,6 +9,7 @@
 #include <nlohmann/json.hpp>
 
 #include <World/Wall.h>
+#include <GameplayObjects/Apple.h>
 
 
 Game::Game()
@@ -108,6 +109,20 @@ bool Game::LoadLevel(std::string levelFilePath)
 					)* (float)GridSize
 				);
 		}
+
+		for (nlohmann::json::iterator it = items["apples"].begin(); it != items["apples"].end(); it++)
+		{
+			SpawnWorldObject<Apple>
+				(
+					"apple",
+					(int)RenderLayers::GameplayObjects,
+					glm::vec2
+					(
+						(*it)["location"]["x"].get<int>(),
+						(*it)["location"]["y"].get<int>()
+					) * (float)GridSize
+					);
+		}
 	}
 	else
 	{
@@ -134,8 +149,8 @@ void Game::ClearLevel()
 void Game::Init()
 {
 	textures.push_back(AtlasTexture("atlas", LoadTextureFromFile("atlas.png")));
-	test = Texture::LoadFromAtlas(this, { 0,64,16,16 });
-	test->SetLocation(glm::vec2(50, 123));
+	/*test = Texture::LoadFromAtlas(this, { 0,64,16,16 });
+	test->SetLocation(glm::vec2(50, 123));*/
 
 	CurrentCamera = new Camera(this);
 

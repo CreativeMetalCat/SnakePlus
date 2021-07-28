@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameplayObjects\EndFlag.cpp" />
+    <ClCompile Include="GameplayObjects\Apple.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Player\InputEvent.cpp" />
@@ -157,6 +159,8 @@
     <ClCompile Include="World\WorldObjects.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameplayObjects\EndFlag.h" />
+    <ClInclude Include="GameplayObjects\Apple.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Player\InputEvent.h" />
