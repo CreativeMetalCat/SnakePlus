@@ -11,6 +11,9 @@ void Player::move(glm::vec2 resLoc)
 			//backtracking
 			if (!SnakeParts.empty() && SnakeParts[SnakeParts.size() - 1]->GetLocation() == resLoc)
 			{
+				rotation = SnakeParts[SnakeParts.size() - 1]->BodyRotation;
+				SnakeHead->BodyRotation = SnakeParts[SnakeParts.size() - 1]->BodyRotation;
+				SnakeHead->UpdateRotation((int)SnakeHead->BodyRotation);
 				SnakeParts[SnakeParts.size() - 1]->Invalidate();
 				SnakeParts.pop_back();
 			}
@@ -22,6 +25,7 @@ void Player::move(glm::vec2 resLoc)
 
 			//check if can move to that location
 			SnakeHead->SetLocation(resLoc);
+			SnakeHead->UpdateRotation((int)rotation);
 		}
 	}
 }
@@ -102,8 +106,6 @@ void Player::UpdateInput(InputEvent* e)
 				rotation = Snake::Rotation::Right;
 				break;
 			}
-
-			SnakeHead->UpdateRotation((int)rotation);
 
 			if (e->Code == SDLK_LEFT || e->Code == SDLK_RIGHT)
 			{

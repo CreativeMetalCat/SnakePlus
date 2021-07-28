@@ -29,6 +29,13 @@ struct AtlasTexture
 	AtlasTexture(std::string _name, SDL_Texture* _texture);
 };
 
+enum class RenderLayers :int
+{
+	Background = 0,
+	GameplayObjects = 1,
+	Snake = 2
+};
+
 class Game
 {
 protected:
