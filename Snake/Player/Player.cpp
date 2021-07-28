@@ -3,6 +3,7 @@
 #include <string>
 
 #include <GameplayObjects/Apple.h>
+#include <GameplayObjects/EndFlag.h>
 
 void Player::move(glm::vec2 resLoc)
 {
@@ -26,6 +27,7 @@ void Player::move(glm::vec2 resLoc)
 					if ((*it)->GetLocation() == resLoc && (*it)->GetName() == "apple")
 					{
 						dynamic_cast<Apple*>(*it)->BeUnCollected();
+						applesCollected--;
 						break;
 					}
 				}
@@ -41,7 +43,18 @@ void Player::move(glm::vec2 resLoc)
 					if ((*it)->GetLocation() == resLoc && (*it)->GetName() == "apple")
 					{
 						dynamic_cast<Apple*>(*it)->BeCollected();
+						applesCollected++;
 						break;
+					}
+				}
+
+				//search over every interactible object to find apples
+				arr = game->GetObjectsInRenderLayer((int)RenderLayers::GameplayObjects);
+				for (auto it = arr.begin(); it != arr.end(); it++)
+				{
+					if ((*it)->GetLocation() == resLoc && (*it)->GetName() == "endFlag")
+					{
+						dynamic_cast<EndFlag*>(*it)->OnTouched();
 					}
 				}
 			}

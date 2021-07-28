@@ -10,6 +10,7 @@
 
 #include <World/Wall.h>
 #include <GameplayObjects/Apple.h>
+#include <GameplayObjects/EndFlag.h>
 
 
 Game::Game()
@@ -61,6 +62,11 @@ SDL_Texture* Game::LoadTextureFromFile(std::string filename)
 		return SDL_CreateTextureFromSurface(renderer, surface);
 	}
 	return nullptr;
+}
+
+void Game::EndLevel()
+{
+	needsToClose = true;
 }
 
 bool Game::LoadLevel(std::string levelFilePath)
@@ -126,10 +132,15 @@ bool Game::LoadLevel(std::string levelFilePath)
 						(*it)["location"]["x"].get<int>(),
 						(*it)["location"]["y"].get<int>()
 					) * (float)GridSize
-					);
+				);
 		}
+		totalAppleCount = items["apples"].size();
 
-		;
+		SpawnWorldObject<EndFlag>("endFlag",(int)RenderLayers::GameplayObjects, glm::vec2
+		(
+			items["finish"]["location"]["x"].get<int>() * GridSize,
+			items["finish"]["location"]["y"].get<int>() * GridSize
+		));
 	}
 	else
 	{

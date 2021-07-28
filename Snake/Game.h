@@ -74,6 +74,8 @@ protected:
 
 	Uint64 lastTime = 0;
 	float deltaTime = 0;
+
+	int totalAppleCount = 0;
 public:
 	/**
 	* to avoid making every object load texture every time we need and to save up some space
@@ -100,7 +102,14 @@ public:
 
 	glm::vec2 GetDefaultWindowSize()const { return default_window_size; }
 
+	int GetTotalAppleCount()const { return totalAppleCount; }
+
 	std::vector<WorldObject*> GetObjectsInRenderLayer(int id) { return RenderLayersObjects[id]; }
+
+	/**
+	* This function shows end level ui
+	*/
+	void EndLevel();
 
 	/**
 	* Load new level.

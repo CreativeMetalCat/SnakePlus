@@ -28,6 +28,8 @@ protected:
 	bool CanMove(glm::vec2 loc);
 
 	Snake::Rotation rotation = Snake::Rotation::Right;
+
+	int applesCollected = 0;
 public:
 	//The part moved by player
 	Snake* SnakeHead = nullptr;
@@ -39,6 +41,10 @@ public:
 	* Reference to each piece of the snake(used for updates)
 	*/
 	std::vector<Snake*>SnakeParts = std::vector<Snake*>();
+
+	int GetSnakeLenght()const { return SnakeParts.size() + 2/*tail and the head*/; }
+
+	int GetAppleCollectedAmount()const { return applesCollected; }
 
 	Player(Game* game);
 
