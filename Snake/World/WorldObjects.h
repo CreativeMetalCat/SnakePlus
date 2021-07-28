@@ -25,6 +25,11 @@ protected:
 public:
 	WorldObject(Game* game, int renderLayerId, std::string name = "", Vector2 loc = { 0,0 });
 
+	/**
+	* Spawns object that will have use global atlas and display part of the atlas cut by frame
+	*/
+	WorldObject(Game* game, int renderLayerId, std::string name = "", glm::vec4 frame = { 0,0,0,0 }, Vector2 loc = { 0,0 });
+
 	int GetRenderLayerId()const { return renderLayerId; }
 
 	virtual void SetLocation(glm::vec2 loc)override;

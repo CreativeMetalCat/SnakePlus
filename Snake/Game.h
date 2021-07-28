@@ -89,6 +89,17 @@ public:
 
 	glm::vec2 GetWindowScale()const { return window_size / default_window_size; }
 
+	/**
+	* Load new level.
+	* Note this adds to the currently existing levels so make sure previous data is cleare
+	*/
+	bool LoadLevel(std::string levelFilePath);
+
+	/**
+	* This function does the same thing as Close() but does not destroy sdl objects
+	*/
+	void ClearLevel();
+
 	Camera* CurrentCamera = nullptr;
 
 	float GetDeltaTime()const { return deltaTime; }

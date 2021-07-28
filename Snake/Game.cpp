@@ -2,6 +2,13 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+#include <nlohmann/json.hpp>
+
+
 Game::Game()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) >= 0)
@@ -53,21 +60,75 @@ SDL_Texture* Game::LoadTextureFromFile(std::string filename)
 	return nullptr;
 }
 
+bool Game::LoadLevel(std::string levelFilePath)
+{
+	std::ifstream assetStream(levelFilePath, std::ios::in);
+	std::string levelText;
+	if (assetStream.is_open())
+	{
+		std::stringstream sstr;
+		sstr << assetStream.rdbuf();
+		levelText = sstr.str();
+		assetStream.close();
+
+		nlohmann::json items = nlohmann::json::parse(levelText);
+		//spawn elements for background aka layer0
+		int fieldSize = atoi(items["size"].get<std::string>().c_str());
+
+		player = new Player(this);
+		player->SnakeHead = SpawnWorldObject<Snake>("snek", 1, Snake::Type::Head, glm::vec2(GridSize, 0));
+		player->SnakeTail = SpawnWorldObject<Snake>("snekEnd", 1, Snake::Type::Tail, glm::vec2(0, 0));
+
+		for (int x = 0; x < fieldSize; x++)
+		{
+			for (int y = 0; y < fieldSize; y++)
+			{
+				SpawnWorldObject<WorldObject>("backgroundTile" + std::to_string(x * y), 0, glm::vec4(0 + rand() % ((3 + 1)),128, 16, 16), glm::vec2(x * GridSize, y * GridSize));
+			}
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void Game::ClearLevel()
+{
+	for (int i = 0; i < objects.size(); i++)
+	{
+		RenderLayersObjects[objects[i]->GetRenderLayerId()].erase
+		(
+			std::find(RenderLayersObjects[objects[i]->GetRenderLayerId()].begin(),
+				RenderLayersObjects[objects[i]->GetRenderLayerId()].end(),
+				objects[i])
+		);
+		objects[i]->Destroy();
+		objects[i] = nullptr;
+	}
+	player = nullptr;
+}
+
 void Game::Init()
 {
 	textures.push_back(AtlasTexture("atlas", LoadTextureFromFile("atlas.png")));
 	test = Texture::LoadFromAtlas(this, { 0,64,16,16 });
 	test->SetLocation(glm::vec2(50, 123));
 
-	player = new Player(this);
-	player->SnakeHead = SpawnWorldObject<Snake>("snek", 0, Snake::Type::Head, glm::vec2(GridSize, 0));
-	player->SnakeTail = SpawnWorldObject<Snake>("snekEnd", 0, Snake::Type::Tail, glm::vec2(0, 0));
+	LoadLevel("levels/level_face.json");
 }
 
 void Game::Close()
 {
 	for (int i = 0; i < objects.size(); i++)
 	{
+		RenderLayersObjects[objects[i]->GetRenderLayerId()].erase
+		(
+			std::find(RenderLayersObjects[objects[i]->GetRenderLayerId()].begin(),
+			RenderLayersObjects[objects[i]->GetRenderLayerId()].end(),
+			objects[i])
+		);
+
 		objects[i]->Destroy();
 		objects[i] = nullptr;
 	}
