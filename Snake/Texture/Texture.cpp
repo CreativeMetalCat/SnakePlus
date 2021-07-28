@@ -31,7 +31,7 @@ Texture* Texture::LoadFromAtlas(Game* game, glm::vec4 frame, glm::vec2 size)
 
 void Texture::SetLocation(glm::vec2 loc)
 {
-	if (game->CurrentCamera)
+	/*if (game->CurrentCamera)
 	{
 		glm::vec2 resLoc = loc - game->CurrentCamera->GetLocation();
 		resRect.x = resLoc.x;
@@ -39,13 +39,13 @@ void Texture::SetLocation(glm::vec2 loc)
 
 		resLoc *= game->GetWindowScale();
 		resultRect = { (int)resLoc.x,(int)resLoc.y,resultRect.w ,resultRect.h };
-	}
-	else
-	{
+	}*/
+	/*else
+	{*/
 		resRect.x = loc.x;
 		resRect.y = loc.y;
-		resultRect = { (int)(loc.x * game->GetWindowScale().x),(int)(loc.y * game->GetWindowScale().y),resultRect.w ,resultRect.h };
-	}
+		resultRect = { (int)(loc.x ),(int)(loc.y),resultRect.w ,resultRect.h };
+	/*}*/
 }
 
 void Texture::UpdateFrameRect(glm::vec4 newRect)
@@ -57,7 +57,25 @@ void Texture::Draw()
 {
 	if(game && game->GetRenderer())
 	{
-		if (SDL_RenderCopy(game->GetRenderer(), texture, &frameRect, &resultRect) < 0)
+		SDL_Rect res = resultRect;
+		if (game->CurrentCamera)
+		{
+			glm::vec2 loc = game->GetWindowScale() * game->GetDefaultWindowSize() / 2.5f;
+			res =
+			{
+				(int)((resultRect.x - game->CurrentCamera->GetLocation().x + loc.x) * game->GetWindowScale().x),
+				(int)((resultRect.y - game->CurrentCamera->GetLocation().y + loc.y) * game->GetWindowScale().y),
+				(int)(resultRect.w* game->GetWindowScale().x),
+				(int)(resultRect.h* game->GetWindowScale().y)
+
+			};
+		}
+		else
+		{
+			res.x *= game->GetWindowScale().x;
+			res.y *= game->GetWindowScale().y;
+		}
+		if (SDL_RenderCopy(game->GetRenderer(), texture, &frameRect, &res) < 0)
 		{
 			throw std::exception(SDL_GetError());
 		}
@@ -66,7 +84,7 @@ void Texture::Draw()
 
 void Texture::OnWindowResize()
 {
-	if (game)
+	if (game && false)
 	{
 		resultRect =
 		{

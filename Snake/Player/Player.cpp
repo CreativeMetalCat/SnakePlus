@@ -25,6 +25,10 @@ void Player::move(glm::vec2 resLoc)
 
 			//check if can move to that location
 			SnakeHead->SetLocation(resLoc);
+			if (game->CurrentCamera)
+			{
+				game->CurrentCamera->SetLocation(resLoc);
+			}
 			SnakeHead->UpdateRotation((int)rotation);
 		}
 	}

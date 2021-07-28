@@ -98,6 +98,8 @@ public:
 
 	glm::vec2 GetWindowScale()const { return window_size / default_window_size; }
 
+	glm::vec2 GetDefaultWindowSize()const { return default_window_size; }
+
 	std::vector<WorldObject*> GetObjectsInRenderLayer(int id) { return RenderLayersObjects[id]; }
 
 	/**

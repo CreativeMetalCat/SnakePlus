@@ -107,7 +107,6 @@ bool Game::LoadLevel(std::string levelFilePath)
 						(*it)["location"]["y"].get<int>()
 					)* (float)GridSize
 				);
-
 		}
 	}
 	else
@@ -137,6 +136,8 @@ void Game::Init()
 	textures.push_back(AtlasTexture("atlas", LoadTextureFromFile("atlas.png")));
 	test = Texture::LoadFromAtlas(this, { 0,64,16,16 });
 	test->SetLocation(glm::vec2(50, 123));
+
+	CurrentCamera = new Camera(this);
 
 	LoadLevel("levels/level_face.json");
 }
