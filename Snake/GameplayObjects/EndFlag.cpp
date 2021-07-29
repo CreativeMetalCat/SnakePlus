@@ -15,6 +15,10 @@ void EndFlag::OnTouched()
 {
 	if (game->player->GetAppleCollectedAmount() >= game->GetTotalAppleCount())
 	{
-		game->EndLevel();
+		game->EndMenu->Visible = true;
+	}
+	else
+	{
+		game->EndInfoCard->Visible = true;
 	}
 }

@@ -82,6 +82,9 @@ protected:
 
 	int totalAppleCount = 0;
 public:
+	Button* EndInfoCard = nullptr;
+	Button* EndMenu = nullptr;
+
 	/**
 	* to avoid making every object load texture every time we need and to save up some space
 	* textures are going to use atlases

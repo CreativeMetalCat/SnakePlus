@@ -179,11 +179,21 @@ void Game::Init()
 
 	LoadLevel("levels/level_face.json");
 
-	SpawnUIObject<Button>("test", glm::vec4{ 0,0,64,32 }, glm::vec2(default_window_size.x / 2, default_window_size.y / 2), glm::vec2(3, 1))->OnPressed = [](Button* b)
+	EndInfoCard = SpawnUIObject<Button>("info", glm::vec4{ 0,0,64,32 }, glm::vec2(default_window_size.x / 2, default_window_size.y / 2), glm::vec2(3, 1));
+	EndInfoCard->OnPressed = [](Button* b)
 	{
 		b->Visible = false;
 	};
-	ui[ui.size() - 1]->UIFrame = { default_window_size.x / 2, default_window_size.y / 2 ,64 * GetWindowScale().x *3,32 * GetWindowScale().y };
+	EndInfoCard->UIFrame = { default_window_size.x / 2, default_window_size.y / 2 ,64 * GetWindowScale().x * 3,32 * GetWindowScale().y };
+	EndInfoCard->Visible = false;
+
+	EndMenu = SpawnUIObject<Button>("end", glm::vec4{ 0,32,64,32 }, glm::vec2(default_window_size.x / 2 - 64 * 3, default_window_size.y / 2), glm::vec2(3, 1));
+	EndMenu->OnPressed = [this](Button* b)
+	{
+		needsToClose = true;
+	};
+	EndMenu->UIFrame = { (default_window_size.x / 2) - 64 * 3, default_window_size.y / 2 ,64 * GetWindowScale().x * 3,32 * GetWindowScale().y };
+	EndMenu->Visible = false;
 }
 
 void Game::Close()

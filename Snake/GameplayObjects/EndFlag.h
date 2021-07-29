@@ -18,8 +18,6 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 class EndFlag : public WorldObject
 {
 public:
-	Button* EndInfoCard = nullptr;
-	Button* EndMenu = nullptr;
 
 	EndFlag(Game* game, int renderLayerId, std::string name = "", Vector2 loc = { 0,0 });
 

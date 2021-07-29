@@ -12,7 +12,7 @@ Button::Button(Game* _game, int _renderLayerId, std::string _name, glm::vec4 fra
 
 void Button::UpdateInput(MouseInputEvent* event)
 {
-	if (event)
+	if (event && Visible)
 	{
 		if (event->EventType == MouseInputEvent::Down)
 		{
