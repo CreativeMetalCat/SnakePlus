@@ -10,6 +10,7 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTH
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 #pragma once
 #include <World/WorldObjects.h>‎
+#include <UI/Button.h>
 
 /**
 * If player touches this one level ends
@@ -17,6 +18,9 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 class EndFlag : public WorldObject
 {
 public:
+	Button* EndInfoCard = nullptr;
+	Button* EndMenu = nullptr;
+
 	EndFlag(Game* game, int renderLayerId, std::string name = "", Vector2 loc = { 0,0 });
 
 	/**

@@ -21,6 +21,8 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 #include <Texture/Texture.h>
 #include <Player/Player.h>
 
+#include <UI/Button.h>
+
 struct AtlasTexture
 {
 	std::string name;
@@ -46,14 +48,14 @@ protected:
 
 	std::vector<WorldObject*>objects = std::vector<WorldObject*>();
 
-	std::vector<WorldObject*>ui = std::vector<WorldObject*>();
+	std::vector<Button*>ui = std::vector<Button*>();
 
 	/**to make drawing easier objects can use differnt layers to be drawn
 	* 0 is background
 	* 1 is gameplay
 	* 2 is for snake
 	*/
-	std::vector<WorldObject*>RenderLayersObjects[4];
+	std::vector<WorldObject*>RenderLayersObjects[(int)RenderLayers::MAX];
 
 	SDL_Window* window = nullptr;
 
@@ -165,7 +167,7 @@ inline Class* Game::SpawnWorldObject(std::string name,int renderLayerId, Args ..
 template<class Class, class ...Args>
 inline Class* Game::SpawnUIObject(std::string name, Args ...args)
 {
-	Class* uio = new Class(this, (int)RenderLayers::UI, args...);
+	Class* uio = new Class(this, (int)RenderLayers::UI, name, args...);
 	RenderLayersObjects[(int)RenderLayers::UI].push_back(uio);
 	ui.push_back(uio);
 	return uio;

@@ -161,6 +161,12 @@ void Game::ClearLevel()
 		objects[i]->Destroy();
 		objects[i] = nullptr;
 	}
+	RenderLayersObjects[(int)RenderLayers::UI].clear();
+	for (int i = 0; i < ui.size(); i++)
+	{
+		ui[i]->Destroy();
+		ui[i] = nullptr;
+	}
 	player = nullptr;
 }
 
@@ -172,6 +178,12 @@ void Game::Init()
 	CurrentCamera = new Camera(this);
 
 	LoadLevel("levels/level_face.json");
+
+	SpawnUIObject<Button>("test", glm::vec4{ 0,0,64,32 }, glm::vec2(default_window_size.x / 2, default_window_size.y / 2), glm::vec2(3, 1))->OnPressed = [](Button* b)
+	{
+		b->Visible = false;
+	};
+	ui[ui.size() - 1]->UIFrame = { default_window_size.x / 2, default_window_size.y / 2 ,64 * GetWindowScale().x *3,32 * GetWindowScale().y };
 }
 
 void Game::Close()
@@ -228,6 +240,11 @@ void Game::Update()
 			inputEvent->Type = (InputType)event.type;
 			inputEvent->Code = event.key.keysym.sym;
 
+			MouseInputEvent* mouseEvent = new MouseInputEvent();
+			mouseEvent->EventType = event.type;
+			
+			SDL_GetMouseState(&mouseEvent->MousePosition.x, &mouseEvent->MousePosition.y);
+
 			if (event.type == SDL_QUIT)
 			{
 				needsToClose = true;
@@ -239,15 +256,24 @@ void Game::Update()
 					window_size_old = window_size;
 					window_size = { event.window.data1,event.window.data2 };
 
-					for (int i = 0; i < objects.size(); i++)
+					for (int i = 0; i < (int)RenderLayers::MAX; i++)
 					{
-						objects[i]->GetTexture()->OnWindowResize();
+						for (int id = 0; id < RenderLayersObjects[i].size(); id++)
+						{
+							RenderLayersObjects[i][id]->GetTexture()->OnWindowResize();
+						}
 					}
+					
 					test->OnWindowResize();
 				}
 			}
 			player->UpdateInput(inputEvent);
+			for (int i = 0; i < ui.size(); i++)
+			{
+				ui[i]->UpdateInput(mouseEvent);
+			}
 		}
+		
 	}
 	lastTime = SDL_GetPerformanceCounter();
 	for (int i = objects.size() - 1; i >= 0; i--)

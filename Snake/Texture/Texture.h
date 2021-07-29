@@ -39,11 +39,19 @@ protected:
 public:
 	Texture(Game* game, glm::vec4 frame = { 0,0,0,0 });
 
+	/**
+	* If true location of this texture will not be relative to camera's current position
+	*/
+	bool ScreenRelative = false;
+
 	//this loads new texture and assignes it 
 	static Texture* LoadFromFile(Game*game,std::string name,glm::vec4 frame);
 
 	//this sets texture to the global atlast texture
 	static Texture* LoadFromAtlas(Game* game, glm::vec4 frame, glm::vec2 size = { 16,16 });
+
+	//this sets texture to the global atlast texture
+	static Texture* LoadFromAtlas(Game* game,std::string atlasName, glm::vec4 frame, glm::vec2 size = { 16,16 });
 
 	void SetLocation(glm::vec2 loc);
 
